@@ -1,11 +1,11 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
-using static UnityEngine.EventSystems.EventTrigger;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,8 +13,25 @@ public class GameManager : MonoBehaviour
     public PlayerInputManager inputManager;
     public MainMenuUI mainMenuUI;
 
+    //PLAYERS
     private List<PlayerMovement> players = new();
     private Dictionary<int, bool> availableIDs = new Dictionary<int, bool>() { {1, true }, {2, true }};
+
+    //POINTS
+    public List<Point> points = new();
+    public List<Point> pointsForRespawn = new();
+    public GameObject goldenPointPrefab;
+    public GameObject normalPointPrefab;
+    public int normalPointsAmount;
+    public int goldenPointsAmount;
+    public int pointsAliveForRespawn;
+    public Transform upCornerArena;
+    public Transform downCornerArena;
+    public Transform pointsParent;
+
+    //TEAMS
+    public int blueTeamPoints;
+    public int redTeamPoints;
 
     private void Awake()
     {
@@ -30,6 +47,54 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        SetupPoints();
+    }
+
+    public void SetupPoints()
+    {
+        for (int i = 0; i < normalPointsAmount; i++)
+        {
+            Vector3 randPos = GetRandomSpawnPosition();
+            Debug.Log("Instantiating point at: " + randPos);
+            GameObject spawnedPointObj = Instantiate(normalPointPrefab, pointsParent);
+            Point spawnedPoint = spawnedPointObj.GetComponent<Point>();
+            points.Add(spawnedPoint);
+            spawnedPoint.RespawnSelf(randPos);
+        }
+
+        for (int i = 0; i < goldenPointsAmount; i++)
+        {
+            Vector3 randPos = GetRandomSpawnPosition();
+            GameObject spawnedPointObj = Instantiate(goldenPointPrefab, pointsParent);
+            Point spawnedPoint = spawnedPointObj.GetComponent<Point>();
+            points.Add(spawnedPoint);
+            spawnedPoint.RespawnSelf(randPos);
+        }
+    }
+
+    public void ScorePoint(PocketColor team, Point point)
+    {
+        if(team == PocketColor.Blue)
+        {
+            blueTeamPoints += point.pointsToGive;
+        }
+        else
+        {
+            redTeamPoints += point.pointsToGive;
+        }
+
+        points.Remove(point);
+        pointsForRespawn.Add(point);
+        Vector3 randPos = GetRandomSpawnPosition();
+        point.RespawnSelf(randPos);
+    }
+
+    private Vector3 GetRandomSpawnPosition()
+    {
+        float randX = Random.Range(upCornerArena.position.x, downCornerArena.position.x);
+        float randZ = Random.Range(upCornerArena.position.z, downCornerArena.position.z);
+        Vector3 randPos = new Vector3(randX, upCornerArena.position.y, randZ);
+        return randPos;
     }
 
     public void LeaveRoom(PlayerInput player)
@@ -95,6 +160,12 @@ public class GameManager : MonoBehaviour
         {
             player.canLeave = false;
         }
+
+        foreach(var point in points)
+        {
+            point.ActivateSelf();
+        }
+
         Debug.Log("Game Started");
     }
 }
