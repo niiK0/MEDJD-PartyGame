@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public int playerID;
     public PlayerInput playerInput;
     public CharacterController playerController;
     public float moveSpeed;
@@ -24,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GetMovement();
+        GetLeaveInput();
     }
 
     private void FixedUpdate()
@@ -40,5 +43,14 @@ public class PlayerMovement : MonoBehaviour
     private void GetMovement()
     {
         moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
+    }
+
+    private void GetLeaveInput()
+    {
+        float leaveInput = playerInput.actions["Attack"].ReadValue<float>();
+        if(leaveInput == 1)
+        {
+            GameManager.Instance.LeaveRoom(this);
+        }
     }
 }
