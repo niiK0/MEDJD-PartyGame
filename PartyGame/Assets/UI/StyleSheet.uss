@@ -29,6 +29,21 @@
     -unity-background-image-tint-color: rgb(153, 228, 255);
 }
 
+.button:selected {
+    font-size: 34px;
+    width: 220px;
+    height: 60px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Kenney%20Future%20Narrow.ttf?fileID=12800000&guid=8e0bcc1db853dda43baf25f2fa6c3efd&type=3#Kenney Future Narrow");
+    background-image: url("project://database/Assets/Images/UI/Extra/button_rectangle_depth.png?fileID=21300000&guid=9c05ea871b45c1646b78e9ae73d46356&type=3#button_rectangle_depth");
+    -unity-background-scale-mode: stretch-to-fill;
+    background-position-y: center 0;
+    background-position-x: center 0;
+    background-size: 100% 100%;
+    margin-top: 50px;
+    scale: 1.1 1.1;
+    -unity-background-image-tint-color: rgb(153, 228, 255);
+}
+
 .playerBG {
     background-image: url("project://database/Assets/Materials/Prototype/Images/Purple/texture_05.png?fileID=2800000&guid=cf4d7efafb4053344b9bc68552827748&type=3#texture_05");
     width: 200px;
