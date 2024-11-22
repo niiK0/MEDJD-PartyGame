@@ -47,6 +47,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 6321207590974590038}
   mainMenuUI: {fileID: 0}
+  points: []
+  goldenPointPrefab: {fileID: 2334366630991593512, guid: ab173bdc7e39707479ed33fbe3bccb44, type: 3}
+  normalPointPrefab: {fileID: 2334366630991593512, guid: 9a09c0cb71c125d439c76c441e8c7955, type: 3}
+  normalPointsAmount: 9
+  goldenPointsAmount: 1
+  pointsAliveForRespawn: 3
+  upCornerArena: {fileID: 0}
+  downCornerArena: {fileID: 0}
 --- !u!114 &6321207590974590038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_NotificationBehavior: 0
-  m_MaxPlayerCount: -1
+  m_MaxPlayerCount: 2
   m_AllowJoining: 1
   m_JoinBehavior: 1
   m_PlayerJoinedEvent:
