@@ -18,7 +18,7 @@
                 <engine:Label text="Ready" name="P2_ReadyLabel" enabled="true" class="header3" style="display: flex; visibility: hidden;" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:Button text="START&#10;" name="StartBtn" class="startBtn button" />
-        <engine:Button text="QUIT&#10;" name="QuitBtn" class="startBtn button" />
+        <engine:Button text="START&#10;" name="StartBtn" selectable="false" class="startBtn button" />
+        <engine:Button text="QUIT&#10;" name="QuitBtn" selectable="false" class="startBtn button" />
     </engine:VisualElement>
 </engine:UXML>

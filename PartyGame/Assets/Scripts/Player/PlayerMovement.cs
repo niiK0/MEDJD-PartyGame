@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -8,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerInput playerInput;
     public CharacterController playerController;
     public float moveSpeed;
+    public bool canLeave = true;
 
     private Vector2 moveInput;
 
@@ -15,18 +18,21 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         playerController = GetComponent<CharacterController>();
+        canLeave = true;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        playerInput.onDeviceLost += PlayerLeave;
     }
 
     // Update is called once per frame
     void Update()
     {
         GetMovement();
-        GetLeaveInput();
+        if(canLeave)
+            GetLeaveInput();
     }
 
     private void FixedUpdate()
@@ -47,10 +53,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void GetLeaveInput()
     {
-        float leaveInput = playerInput.actions["Attack"].ReadValue<float>();
+        float leaveInput = playerInput.actions["Interact"].ReadValue<float>();
         if(leaveInput == 1)
         {
-            GameManager.Instance.LeaveRoom(this);
+            PlayerLeave(playerInput);
         }
+    }
+
+    public void PlayerLeave(PlayerInput input)
+    {
+        GameManager.Instance.LeaveRoom(input);
     }
 }

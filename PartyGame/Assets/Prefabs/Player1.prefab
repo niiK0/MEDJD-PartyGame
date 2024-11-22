@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3155335647566702959}
   m_Layer: 0
   m_Name: Player1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124e25dd23029604c9de42aca6d09c16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 0}
-  playerController: {fileID: 0}
+  playerID: 0
+  playerInput: {fileID: 231240864742406859}
+  playerController: {fileID: 9045128171272040404}
   moveSpeed: 5
+  canLeave: 1
