@@ -16,11 +16,14 @@ public class Point : MonoBehaviour
     {
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rb.linearDamping = 0f;
     }
 
     public void RespawnSelf(Vector3 spawnPos)
     {
         rb.useGravity = false;
         rb.position = spawnPos;
+        rb.linearVelocity = Vector3.zero;
+        rb.linearDamping = 5f;
     }
 }

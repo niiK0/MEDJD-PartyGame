@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public enum ControllerType {None, KBM, GPAD}
@@ -19,18 +20,17 @@ public class MainMenuUI : MonoBehaviour
     private Label p1_ready;
     private Label p2_ready;
 
-
     private void Awake()
     {
         document = GetComponent<UIDocument>();
 
         //Play btn setup
         playButton = document.rootVisualElement.Q<Button>("StartBtn");
-        playButton.RegisterCallback<ClickEvent>(OnPlayGameClick);
+        playButton.clicked += OnPlayGameClick;
 
         //Quit btn setup
         quitButton = document.rootVisualElement.Q<Button>("QuitBtn");
-        quitButton.RegisterCallback<ClickEvent>(OnQuitGameClick);
+        quitButton.clicked += OnQuitGameClick;
 
         //players images
         p1_image = document.rootVisualElement.Q<VisualElement>("IMG_JoinP1");
@@ -41,10 +41,15 @@ public class MainMenuUI : MonoBehaviour
         p2_ready = document.rootVisualElement.Q<Label>("P2_ReadyLabel");
     }
 
+    private void Start()
+    {
+        playButton.Focus();
+    }
+
     private void OnDisable()
     {
-        playButton.UnregisterCallback<ClickEvent>(OnPlayGameClick);
-        quitButton.UnregisterCallback<ClickEvent>(OnQuitGameClick);
+        playButton.clicked -= OnPlayGameClick;
+        quitButton.clicked -= OnQuitGameClick;
     }
 
     public void SetPlayerReady(int player, ControllerType controllerType, bool isReady)
@@ -64,12 +69,12 @@ public class MainMenuUI : MonoBehaviour
         }
     }
 
-    public void OnPlayGameClick(ClickEvent evt)
+    public void OnPlayGameClick()
     {
         GameManager.Instance.StartGame();
     }
 
-    public void OnQuitGameClick(ClickEvent evt)
+    public void OnQuitGameClick()
     {
         Debug.Log("Quit game :D");
     }

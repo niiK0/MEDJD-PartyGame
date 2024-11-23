@@ -8,7 +8,8 @@ public class PointPocket : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag != "Point") return;
+        Debug.Log("Collided with: " + other.name);
+        if (!other.CompareTag("Point")) return;
 
         GameManager.Instance.ScorePoint(team, other.GetComponent<Point>());
     }
