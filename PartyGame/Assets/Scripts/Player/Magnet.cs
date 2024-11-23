@@ -1,4 +1,8 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum CurrentState { Idle, Lowering, Picking, Returning }
 
 public class Magnet : MonoBehaviour
 {
@@ -7,24 +11,26 @@ public class Magnet : MonoBehaviour
     public float activateYValue;
     public float moveSpeed = 2.0f;
     public float returnDelay = 2.0f;
+    public float pressCooldown = 1.0f; // Cooldown duration
+    public float pullSpeed = 150f;
 
-    private bool isActivating = false;
-    private bool isReturning = false;
+    private bool isMoving = false;
+    private bool hasPoints = false;
+    private bool canPress = true; // Determines if the player can press
+    public Transform pullPosition;
     private Vector3 targetPosition;
+    public CurrentState currentState = CurrentState.Idle;
+
+    public List<Point> points = new();
 
     void Start()
     {
         magnet.transform.localPosition = new Vector3(0, resetYValue, 0);
     }
 
-    public bool CanActivate()
-    {
-        return !isActivating && !isReturning;
-    }
-
     void FixedUpdate()
     {
-        if (isActivating || isReturning)
+        if (isMoving)
         {
             magnet.transform.localPosition = Vector3.Lerp(
                 magnet.transform.localPosition,
@@ -36,38 +42,79 @@ public class Magnet : MonoBehaviour
             {
                 magnet.transform.localPosition = targetPosition;
 
-                if (isActivating)
+                if (currentState == CurrentState.Lowering)
                 {
-                    isActivating = false;
+                    currentState = CurrentState.Picking;
+                    GetComponent<Collider>().enabled = true;
+                    isMoving = false;
                     Invoke(nameof(StartReturn), returnDelay);
                 }
-                else if (isReturning)
+                else if (currentState == CurrentState.Returning)
                 {
-                    isReturning = false;
+                    currentState = CurrentState.Idle;
+                    isMoving = false;
                 }
             }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnPlayerClick()
     {
-        Debug.Log("Collided with: "+ other.name);
+        if (!canPress || currentState != CurrentState.Idle) return;
 
-        if (!other.CompareTag("Point")) return;
-        //if (isActivating || isReturning) return;
+        canPress = false; // Disable pressing
+        Invoke(nameof(ResetPressCooldown), pressCooldown); // Schedule re-enabling pressing
 
-        other.transform.SetParent(magnet.transform);
+        if (hasPoints)
+        {
+            DropPoints();
+        }
+        else
+        {
+            StartLowering();
+        }
     }
 
-    public void Activate()
+    private void ResetPressCooldown()
+    {
+        canPress = true;
+    }
+
+    private void StartLowering()
     {
         targetPosition = new Vector3(0, activateYValue, 0);
-        isActivating = true;
+        currentState = CurrentState.Lowering;
+        isMoving = true;
     }
 
     private void StartReturn()
     {
         targetPosition = new Vector3(0, resetYValue, 0);
-        isReturning = true;
+        currentState = CurrentState.Returning;
+        isMoving = true;
+        GetComponent<Collider>().enabled = false;
+    }
+
+    private void DropPoints()
+    {
+        hasPoints = false;
+        foreach (var point in points)
+        {
+            point.GetReleased();
+        }
+        points.Clear();
+        Debug.Log("Points dropped!");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (currentState != CurrentState.Picking) return;
+        if (!other.CompareTag("Point")) return;
+
+        hasPoints = true;
+        var point = other.GetComponent<Point>();
+        point.GetPickedUP(pullPosition, pullSpeed);
+        points.Add(point);
+        Debug.Log("Point picked up!");
     }
 }

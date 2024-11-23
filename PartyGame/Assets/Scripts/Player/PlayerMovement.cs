@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR.Haptics;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -58,8 +59,7 @@ public class PlayerMovement : MonoBehaviour
             if(canLeave)
                 PlayerLeave(playerInput);
 
-            if (GetComponentInChildren<Magnet>().CanActivate())
-                GetComponentInChildren<Magnet>().Activate();
+            GetComponentInChildren<Magnet>().OnPlayerClick();
         }
     }
 

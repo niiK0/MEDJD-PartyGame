@@ -50,6 +50,30 @@ public class GameManager : MonoBehaviour
         SetupPoints();
     }
 
+    private void Update()
+    {
+        CheckRespawn();
+    }
+
+    private void CheckRespawn()
+    {
+        if(points.Count < pointsAliveForRespawn)
+        {
+            RespawnPoints();
+        }
+    }
+
+    private void RespawnPoints()
+    {
+        foreach(var point in pointsForRespawn)
+        {
+            points.Add(point);
+            point.ActivateSelf();
+        }
+
+        pointsForRespawn.Clear();
+    }
+
     public void SetupPoints()
     {
         for (int i = 0; i < normalPointsAmount; i++)
