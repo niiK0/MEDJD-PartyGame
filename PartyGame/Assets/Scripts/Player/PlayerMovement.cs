@@ -31,8 +31,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         GetMovement();
-        if(canLeave)
-            GetLeaveInput();
+        GetInteractInput();
     }
 
     private void FixedUpdate()
@@ -51,12 +50,16 @@ public class PlayerMovement : MonoBehaviour
         moveInput = playerInput.actions["Move"].ReadValue<Vector2>();
     }
 
-    private void GetLeaveInput()
+    private void GetInteractInput()
     {
         float leaveInput = playerInput.actions["Interact"].ReadValue<float>();
         if(leaveInput == 1)
         {
-            PlayerLeave(playerInput);
+            if(canLeave)
+                PlayerLeave(playerInput);
+
+            if (GetComponentInChildren<Magnet>().CanActivate())
+                GetComponentInChildren<Magnet>().Activate();
         }
     }
 
