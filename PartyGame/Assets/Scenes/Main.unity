@@ -1181,10 +1181,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2690198149041917532, guid: 1f84f5f06bec36646887010b4db527c6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1446,10 +1442,6 @@ PrefabInstance:
     - target: {fileID: 3942456044604799704, guid: ff83fbdc50e8c66408cbd05e6c92eee0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4583149795537479461, guid: ff83fbdc50e8c66408cbd05e6c92eee0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7047928315081578798, guid: ff83fbdc50e8c66408cbd05e6c92eee0, type: 3}
       propertyPath: m_Name
@@ -2471,7 +2463,7 @@ PrefabInstance:
       objectReference: {fileID: 2121632566}
     - target: {fileID: 4368712396029178783, guid: 6b626bb7745e8134394710b2fa29363c, type: 3}
       propertyPath: baseTimer
-      value: 7
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4368712396029178783, guid: 6b626bb7745e8134394710b2fa29363c, type: 3}
       propertyPath: mainMenuUI
