@@ -168,15 +168,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3350022034467622559, guid: fb53dc4eef7b2ea4eb53bb128e1207a9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350022034467622559, guid: fb53dc4eef7b2ea4eb53bb128e1207a9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.58778524
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350022034467622559, guid: fb53dc4eef7b2ea4eb53bb128e1207a9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.809017
       objectReference: {fileID: 0}
     - target: {fileID: 3350022034467622559, guid: fb53dc4eef7b2ea4eb53bb128e1207a9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3350022034467622559, guid: fb53dc4eef7b2ea4eb53bb128e1207a9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3350022034467622559, guid: fb53dc4eef7b2ea4eb53bb128e1207a9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -72
+      objectReference: {fileID: 0}
+    - target: {fileID: 5107257068146130510, guid: fb53dc4eef7b2ea4eb53bb128e1207a9, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 7295621984365030863, guid: fb53dc4eef7b2ea4eb53bb128e1207a9, type: 3}
       propertyPath: m_LocalPosition.x
