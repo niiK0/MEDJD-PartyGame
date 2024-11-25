@@ -11,7 +11,11 @@ public class PlayerMovement : MonoBehaviour
     public PlayerInput playerInput;
     public CharacterController playerController;
     public float moveSpeed;
+    public float baseMoveSpeed;
     public bool canLeave = true;
+    public Magnet magnet;
+    public float maxSpeedReduction = 0.5f;
+    public int maxPointsForPenalty = 10;
 
     private Vector2 moveInput;
 
@@ -33,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GetMovement();
         GetInteractInput();
+        GetPauseInput();
     }
 
     private void FixedUpdate()
@@ -42,8 +47,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        if (magnet.points.Count > 0)
+        {
+            float reductionFactor = Mathf.Clamp01(magnet.points.Count / (float)maxPointsForPenalty);
+            moveSpeed = baseMoveSpeed * (1.0f - (reductionFactor * maxSpeedReduction));
+        }
+        else
+        {
+            moveSpeed = baseMoveSpeed;
+        }
         Vector3 moveInputV3 = new Vector3(moveInput.x, 0, moveInput.y) * moveSpeed;
-        playerController.Move(moveInputV3 * Time.deltaTime);
+        playerController.Move(moveInputV3 * Time.fixedDeltaTime);
+        Vector3 curPos = transform.position;
+        curPos.y = 3f;
+        transform.position = curPos;
     }
 
     private void GetMovement()
@@ -61,6 +78,21 @@ public class PlayerMovement : MonoBehaviour
 
             GetComponentInChildren<Magnet>().OnPlayerClick();
         }
+    }
+
+    private void GetPauseInput()
+    {
+        float pauseInput = playerInput.actions["Pause"].ReadValue<float>();
+        if (pauseInput == 1)
+        {
+            if (!canLeave)
+                GameManager.Instance.PauseGame();
+        }
+    }
+
+    public void TeleportSelf(Vector3 tpPos)
+    {
+        transform.position = tpPos;
     }
 
     public void PlayerLeave(PlayerInput input)

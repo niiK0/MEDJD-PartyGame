@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6521119996568107492}
   - component: {fileID: 6499525551408983563}
   - component: {fileID: 669926824762572699}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Magnet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5722228080216574354}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: PullPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 5184541715786753428}
   - component: {fileID: 982157596132289831}
   - component: {fileID: 1751388103470808555}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,6 +295,7 @@ GameObject:
   - component: {fileID: 9045128171272040404}
   - component: {fileID: 231240864742406859}
   - component: {fileID: 3155335647566702959}
+  - component: {fileID: 738036647561514585}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Player
@@ -331,7 +332,7 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
@@ -389,7 +390,24 @@ MonoBehaviour:
   playerInput: {fileID: 231240864742406859}
   playerController: {fileID: 9045128171272040404}
   moveSpeed: 5
+  baseMoveSpeed: 5
   canLeave: 1
+  magnet: {fileID: 669926824762572699}
+  maxSpeedReduction: 1
+  maxPointsForPenalty: 10
+--- !u!114 &738036647561514585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6101794836457054110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf8cf7a8efaf72642b7bf3911d692d89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bumpCooldown: 1.5
 --- !u!1 &8552540204576729910
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,7 +419,7 @@ GameObject:
   - component: {fileID: 1756395630544284188}
   - component: {fileID: 6390667050418779817}
   - component: {fileID: 6736657975076362245}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Attacher
   m_TagString: Untagged
   m_Icon: {fileID: 0}

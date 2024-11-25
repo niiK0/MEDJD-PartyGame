@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &323294933278845680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7272520552569407738}
+  m_Layer: 0
+  m_Name: redSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7272520552569407738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323294933278845680}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8036523805747795949}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1129199580603333021
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,6 +42,7 @@ GameObject:
   - component: {fileID: 8036523805747795949}
   - component: {fileID: 4368712396029178783}
   - component: {fileID: 6321207590974590038}
+  - component: {fileID: 8606235668784396294}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -30,7 +62,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7272520552569407738}
+  - {fileID: 5189095615002796866}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4368712396029178783
@@ -47,13 +81,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 6321207590974590038}
   mainMenuUI: {fileID: 0}
+  gui: {fileID: 0}
+  pauseUI: {fileID: 0}
+  timer: 30
+  baseTimer: 30
+  redPlayerSpawn: {fileID: 7272520552569407738}
+  bluePlayerSpawn: {fileID: 5189095615002796866}
   points: []
   pointsForRespawn: []
   goldenPointPrefab: {fileID: 2334366630991593512, guid: ab173bdc7e39707479ed33fbe3bccb44, type: 3}
   normalPointPrefab: {fileID: 2334366630991593512, guid: 9a09c0cb71c125d439c76c441e8c7955, type: 3}
   normalPointsAmount: 14
   goldenPointsAmount: 1
-  pointsAliveForRespawn: 3
+  pointsAliveForRespawn: 5
   upCornerArena: {fileID: 0}
   downCornerArena: {fileID: 0}
   pointsParent: {fileID: 0}
@@ -139,3 +179,47 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &8606235668784396294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129199580603333021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a196b63ea67df6a428ef586551ef0c1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateAmount: -0.5
+--- !u!1 &1814805082352946849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5189095615002796866}
+  m_Layer: 0
+  m_Name: blueSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5189095615002796866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814805082352946849}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8036523805747795949}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
