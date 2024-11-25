@@ -12,10 +12,19 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public PlayerInputManager inputManager;
     public MainMenuUI mainMenuUI;
+    public GUI gui;
+    public PauseUI pauseUI;
+
+    //TIMER
+    public float timer = 30;
+    public float baseTimer = 30;
 
     //PLAYERS
     private List<PlayerMovement> players = new();
     private Dictionary<int, bool> availableIDs = new Dictionary<int, bool>() { {1, true }, {2, true }};
+
+    public Transform redPlayerSpawn;
+    public Transform bluePlayerSpawn;
 
     //POINTS
     public List<Point> points = new();
@@ -47,12 +56,31 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SetupPoints();
+        ResetGame();
     }
 
     private void Update()
     {
         CheckRespawn();
+        DoTimer();
+    }
+
+    private void DoTimer()
+    {
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            gui.UpdateTimer(Mathf.CeilToInt(timer));
+            if(timer <= 5f)
+            {
+                gui.StartTimerAnimation();
+            }
+        }
+        else
+        {
+            EndGame();
+        }
+
     }
 
     private void CheckRespawn()
@@ -101,10 +129,12 @@ public class GameManager : MonoBehaviour
         if(team == PocketColor.Blue)
         {
             blueTeamPoints += point.pointsToGive;
+            gui.UpdateBlueScore(blueTeamPoints);
         }
         else
         {
             redTeamPoints += point.pointsToGive;
+            gui.UpdateRedScore(redTeamPoints);
         }
 
         points.Remove(point);
@@ -174,22 +204,111 @@ public class GameManager : MonoBehaviour
         mainMenuUI.SetPlayerReady(playerInput.GetComponent<PlayerMovement>().playerID, controllerType, true);
     }
 
+    public void EndGame()
+    {
+        if (redTeamPoints > blueTeamPoints)
+        {
+            gui.ShowWinner(true);
+            gui.SetRedWinner();
+            Debug.Log("Red team won!");
+        }
+        else if(blueTeamPoints > redTeamPoints)
+        {
+            gui.ShowWinner(true);
+            gui.SetBlueWinner();
+            Debug.Log("Blue team won!");
+        }
+        else
+        {
+            gui.ShowWinner(true);
+            gui.SetDrawText();
+            Debug.Log("Draw!");
+        }
+
+        Time.timeScale = 0;
+        Invoke("QuitGame", 3f);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quitting game...");
+    }
+
+    public void ResumeGame()
+    {
+        pauseUI.document.rootVisualElement.style.display = DisplayStyle.None;
+        pauseUI.OnShow();
+        Time.timeScale = 1;
+    }
+
+    public void PauseGame()
+    {
+        pauseUI.document.rootVisualElement.style.display = DisplayStyle.Flex;
+        Time.timeScale = 0;
+    }
+
+    public void BackToMenu()
+    {
+        ResetGame();
+        Time.timeScale = 1;
+    }
+
     public void StartGame()
     {
+        if (players.Count < 2) return;
+
         //START GAME HERE
-        //STOP CONTROLLER JOIN
-        mainMenuUI.GetComponent<UIDocument>().enabled = false;
+        mainMenuUI.document.rootVisualElement.style.display = DisplayStyle.None;
+        gui.document.rootVisualElement.style.display = DisplayStyle.Flex;
         inputManager.DisableJoining();
         foreach (var player in players)
         {
             player.canLeave = false;
         }
 
+        players.Find(x => x.playerID == 1).TeleportSelf(redPlayerSpawn.position);
+        players.Find(x => x.playerID == 2).TeleportSelf(bluePlayerSpawn.position);
+
+        SetupPoints();
         foreach(var point in points)
         {
             point.ActivateSelf();
         }
 
         Debug.Log("Game Started");
+    }
+
+    public void ResetGame()
+    {
+        redTeamPoints = 0;
+        blueTeamPoints = 0;
+        timer = baseTimer;
+        DestroyAllPointsAndPlayers();
+        mainMenuUI.document.rootVisualElement.style.display = DisplayStyle.Flex;
+        gui.document.rootVisualElement.style.display = DisplayStyle.None;
+        pauseUI.document.rootVisualElement.style.display = DisplayStyle.None;
+        gui.ShowWinner(false);
+        inputManager.EnableJoining();
+    }
+
+    private void DestroyAllPointsAndPlayers()
+    {
+        // Destroy all points safely
+        for (int i = points.Count - 1; i >= 0; i--)
+        {
+            Destroy(points[i].gameObject);
+            points.RemoveAt(i);
+        }
+
+        // Destroy all players safely
+        for (int i = players.Count - 1; i >= 0; i--)
+        {
+            if (players[i] != null)
+            {
+                Destroy(players[i].gameObject);
+            }
+        }
+        players.Clear();
     }
 }

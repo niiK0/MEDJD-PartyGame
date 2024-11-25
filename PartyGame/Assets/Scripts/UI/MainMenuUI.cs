@@ -7,7 +7,7 @@ public enum ControllerType {None, KBM, GPAD}
 
 public class MainMenuUI : MonoBehaviour
 {
-    private UIDocument document;
+    public UIDocument document;
     private Button playButton;
     private Button quitButton;
 
@@ -76,6 +76,6 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnQuitGameClick()
     {
-        Debug.Log("Quit game :D");
+        GameManager.Instance.QuitGame();
     }
 }
