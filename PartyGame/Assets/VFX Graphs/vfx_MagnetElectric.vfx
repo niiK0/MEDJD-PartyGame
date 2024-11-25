@@ -3089,7 +3089,7 @@ MonoBehaviour:
   m_OutputSlots:
   - {fileID: 8926484042661617588}
   attribute: position
-  location: 0
+  location: 1
   mask: xyz
 --- !u!114 &8926484042661617588
 MonoBehaviour:
