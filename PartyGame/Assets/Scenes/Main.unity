@@ -1975,7 +1975,7 @@ PrefabInstance:
       objectReference: {fileID: 2121632566}
     - target: {fileID: 4368712396029178783, guid: 6b626bb7745e8134394710b2fa29363c, type: 3}
       propertyPath: baseTimer
-      value: 30
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4368712396029178783, guid: 6b626bb7745e8134394710b2fa29363c, type: 3}
       propertyPath: mainMenuUI
