@@ -126,8 +126,8 @@ MonoBehaviour:
   magnet: {fileID: 1984127216323604877}
   resetYValue: -1
   activateYValue: -1.45
-  moveSpeed: 4
-  returnDelay: 0.5
+  moveSpeed: 8
+  returnDelay: 0.2
   pressCooldown: 1
   pullSpeed: 150
   pullPosition: {fileID: 5722228080216574354}

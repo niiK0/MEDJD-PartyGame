@@ -8,7 +8,7 @@
     background-position-y: center 0;
     background-position-x: center 0;
     background-size: 100% 100%;
-    margin-top: 50px;
+    margin-top: 0;
     transition-duration: 0.1s;
     transition-timing-function: ease;
     transition-delay: 0s;
@@ -24,7 +24,7 @@
     background-position-y: center 0;
     background-position-x: center 0;
     background-size: 100% 100%;
-    margin-top: 50px;
+    margin-top: 0;
     scale: 1.1 1.1;
     -unity-background-image-tint-color: rgb(153, 228, 255);
 }
@@ -39,7 +39,7 @@
     background-position-y: center 0;
     background-position-x: center 0;
     background-size: 100% 100%;
-    margin-top: 50px;
+    margin-top: 0;
     scale: 1.1 1.1;
     -unity-background-image-tint-color: rgb(153, 228, 255);
 }
@@ -62,7 +62,7 @@
     -unity-font-definition: url("project://database/Assets/Fonts/Kenney%20Future.ttf?fileID=12800000&guid=0b48c8619304d90408ef84c3b982d219&type=3#Kenney Future");
     font-size: 28px;
     -unity-text-align: middle-center;
-    margin-top: 10px;
+    margin-top: 0;
     flex-shrink: 0;
     align-self: center;
     justify-content: flex-start;
@@ -76,7 +76,7 @@
     -unity-font-definition: url("project://database/Assets/Fonts/Kenney%20Future.ttf?fileID=12800000&guid=0b48c8619304d90408ef84c3b982d219&type=3#Kenney Future");
     font-size: 28px;
     -unity-text-align: middle-center;
-    margin-top: 20px;
+    margin-top: 55px;
     align-self: center;
     align-items: auto;
     flex-shrink: 0;
@@ -105,9 +105,9 @@
     justify-content: center;
     align-self: center;
     align-content: auto;
-    width: 64px;
-    height: 64px;
-    margin-top: 0;
+    width: 96px;
+    height: 96px;
+    margin-top: -40px;
     background-image: url("project://database/Assets/Images/UI/joystick.png?fileID=21300000&guid=33732345d7365b24b93f896c89b523b4&type=3#joystick");
     flex-direction: column;
 }
