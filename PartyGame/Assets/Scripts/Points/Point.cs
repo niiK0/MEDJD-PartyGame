@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEngine.GraphicsBuffer;
 
 public class Point : MonoBehaviour
@@ -61,6 +62,7 @@ public class Point : MonoBehaviour
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         rb.linearDamping = 0f;
+        GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.On;
     }
 
     public void RespawnSelf(Vector3 spawnPos)
@@ -71,6 +73,7 @@ public class Point : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.linearDamping = 5f;
+        GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.Off;
     }
 
     public void GetPickedUP(Transform magnet, float speed)
