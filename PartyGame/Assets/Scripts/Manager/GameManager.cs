@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     //TIMER
     public float timer = 30;
     public float baseTimer = 30;
+    public bool startTimer = false;
 
     //PLAYERS
     private List<PlayerMovement> players = new();
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     private void DoTimer()
     {
+        if (!startTimer) return;
         if (timer > 0)
         {
             timer -= Time.deltaTime;
@@ -268,13 +270,17 @@ public class GameManager : MonoBehaviour
         }
 
         players.Find(x => x.playerID == 1).TeleportSelf(redPlayerSpawn.position);
+        players.Find(x => x.playerID == 1).EnableRedVersion();
         players.Find(x => x.playerID == 2).TeleportSelf(bluePlayerSpawn.position);
+        players.Find(x => x.playerID == 2).EnableBlueVersion();
 
         SetupPoints();
         foreach(var point in points)
         {
             point.ActivateSelf();
         }
+
+        startTimer = true;
 
         Debug.Log("Game Started");
     }

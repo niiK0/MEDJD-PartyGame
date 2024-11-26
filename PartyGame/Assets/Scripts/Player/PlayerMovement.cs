@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     public float maxSpeedReduction = 0.5f;
     public int maxPointsForPenalty = 10;
 
+    public GameObject redVersion;
+    public GameObject blueVersion;
+
     private Vector2 moveInput;
 
     void Awake()
@@ -43,6 +46,18 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+    }
+
+    public void EnableRedVersion()
+    {
+        redVersion.SetActive(true);
+        blueVersion.SetActive(false);
+    }
+
+    public void EnableBlueVersion()
+    {
+        redVersion.SetActive(false);
+        blueVersion.SetActive(true);
     }
 
     private void MovePlayer()

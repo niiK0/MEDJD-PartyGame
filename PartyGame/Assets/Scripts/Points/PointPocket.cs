@@ -5,6 +5,7 @@ public enum PocketColor { Blue, Red}
 public class PointPocket : MonoBehaviour
 {
     public PocketColor team;
+    public ParticleSystem vfx;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,5 +14,6 @@ public class PointPocket : MonoBehaviour
         Debug.Log("Collided with: " + other.name);
 
         GameManager.Instance.ScorePoint(team, other.GetComponent<Point>());
+        vfx.Play();
     }
 }
