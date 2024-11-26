@@ -85,6 +85,7 @@ MonoBehaviour:
   pauseUI: {fileID: 0}
   timer: 30
   baseTimer: 30
+  startTimer: 0
   redPlayerSpawn: {fileID: 7272520552569407738}
   bluePlayerSpawn: {fileID: 5189095615002796866}
   points: []

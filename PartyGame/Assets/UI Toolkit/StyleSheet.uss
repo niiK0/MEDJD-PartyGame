@@ -105,8 +105,8 @@
     justify-content: center;
     align-self: center;
     align-content: auto;
-    width: 96px;
-    height: 96px;
+    width: 64px;
+    height: 64px;
     margin-top: -40px;
     background-image: url("project://database/Assets/Images/UI/joystick.png?fileID=21300000&guid=33732345d7365b24b93f896c89b523b4&type=3#joystick");
     flex-direction: column;
