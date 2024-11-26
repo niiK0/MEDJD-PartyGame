@@ -16,6 +16,9 @@ public class Point : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        rb.mass = 5f;
+        rb.linearDamping = 0.5f;
+        rb.angularDamping = 4f;
     }
 
     private void FixedUpdate()
@@ -27,19 +30,16 @@ public class Point : MonoBehaviour
     private void PullPoint()
     {
         Vector3 direction = (pullTarget - transform.localPosition).normalized;
-        rb.linearVelocity = direction * pullSpeed * Time.fixedDeltaTime;
+        rb.AddForce(direction * pullSpeed * Time.fixedDeltaTime, ForceMode.Acceleration);
     }
 
     void Update()
     {
-        if (isBeingPulled)
-        {
-            if (Vector3.Distance(transform.localPosition, pullTarget) < 0.1f)
-            {
-                isBeingPulled = false;
-                rb.linearVelocity = Vector3.zero;
-            }
-        }
+        //if (isBeingPulled && Vector3.Distance(transform.localPosition, pullTarget) < 0.1f)
+        //{
+        //    isBeingPulled = false;
+        //    rb.linearVelocity = Vector3.zero;
+        //}
     }
 
     public void StartPullingTowards(Vector3 target, float speed)
@@ -48,6 +48,8 @@ public class Point : MonoBehaviour
         pullSpeed = speed;
         isBeingPulled = true;
         rb.useGravity = false;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     public void StopPulling()
@@ -60,9 +62,14 @@ public class Point : MonoBehaviour
     public void ActivateSelf()
     {
         rb.useGravity = true;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rb.linearDamping = 0f;
+        rb.constraints = RigidbodyConstraints.None;
         GetComponent<MeshRenderer>().shadowCastingMode = ShadowCastingMode.On;
+        Invoke("AdjustFallingSpeed", 0.5f);
+    }
+
+    public void AdjustFallingSpeed()
+    {
+        rb.linearDamping = 0.1f;
     }
 
     public void RespawnSelf(Vector3 spawnPos)
