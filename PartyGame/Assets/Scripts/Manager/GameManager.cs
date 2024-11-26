@@ -227,7 +227,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("Draw!");
         }
 
-        Time.timeScale = 0;
+        players.ForEach(x => x.isGettingPushed = true);
+        //Time.timeScale = 0;
         Invoke("QuitGame", 3f);
     }
 
