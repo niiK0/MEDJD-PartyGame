@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8548984593853382754}
   - component: {fileID: 2137172540137200815}
   - component: {fileID: -6106740580435726489}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point
   m_TagString: Point
   m_Icon: {fileID: 0}

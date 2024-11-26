@@ -7,55 +7,25 @@ public enum CurrentState { Idle, Lowering, Picking, Returning }
 public class Magnet : MonoBehaviour
 {
     public GameObject magnet;
-    public float resetYValue;
-    public float activateYValue;
-    public float moveSpeed = 2.0f;
-    public float returnDelay = 2.0f;
-    public float pressCooldown = 1.0f; // Cooldown duration
+    public float pressCooldown = 1.0f;
     public float pullSpeed = 150f;
 
-    private bool isMoving = false;
     private bool hasPoints = false;
-    private bool canPress = true; // Determines if the player can press
+    private bool canPress = true;
     public Transform pullPosition;
-    private Vector3 targetPosition;
     public CurrentState currentState = CurrentState.Idle;
+
+    public GameObject vfx;
+    public Animator anim;
 
     public List<Point> points = new();
 
     void Start()
     {
-        magnet.transform.localPosition = new Vector3(0, resetYValue, 0);
     }
 
     void FixedUpdate()
     {
-        if (isMoving)
-        {
-            magnet.transform.localPosition = Vector3.Lerp(
-                magnet.transform.localPosition,
-                targetPosition,
-                moveSpeed * Time.fixedDeltaTime
-            );
-
-            if (Vector3.Distance(magnet.transform.localPosition, targetPosition) < 0.01f)
-            {
-                magnet.transform.localPosition = targetPosition;
-
-                if (currentState == CurrentState.Lowering)
-                {
-                    currentState = CurrentState.Picking;
-                    GetComponent<Collider>().enabled = true;
-                    isMoving = false;
-                    Invoke(nameof(StartReturn), returnDelay);
-                }
-                else if (currentState == CurrentState.Returning)
-                {
-                    currentState = CurrentState.Idle;
-                    isMoving = false;
-                }
-            }
-        }
     }
 
     public void OnPlayerClick()
@@ -71,28 +41,13 @@ public class Magnet : MonoBehaviour
         }
         else
         {
-            StartLowering();
+            anim.Play("ShipMagnet", 0, 0.0f);
         }
     }
 
     private void ResetPressCooldown()
     {
         canPress = true;
-    }
-
-    private void StartLowering()
-    {
-        targetPosition = new Vector3(0, activateYValue, 0);
-        currentState = CurrentState.Lowering;
-        isMoving = true;
-    }
-
-    private void StartReturn()
-    {
-        targetPosition = new Vector3(0, resetYValue, 0);
-        currentState = CurrentState.Returning;
-        isMoving = true;
-        GetComponent<Collider>().enabled = false;
     }
 
     private void DropPoints()
@@ -116,5 +71,30 @@ public class Magnet : MonoBehaviour
         point.GetPickedUP(pullPosition, pullSpeed);
         points.Add(point);
         Debug.Log("Point picked up!");
+    }
+
+    public void FinishAnimation()
+    {
+        currentState = CurrentState.Idle;
+    }
+
+    public void StartDrop()
+    {
+        currentState = CurrentState.Lowering;
+    }
+
+    public void ActivateCollider()
+    {
+        GetComponent<Collider>().enabled = true;
+        currentState = CurrentState.Picking;
+        vfx.SetActive(true);
+    }
+
+    public void DeactivateCollider()
+    {
+        GetComponent<Collider>().enabled = false;
+        currentState = CurrentState.Returning;
+        Invoke("ResetPressCooldown", pressCooldown);
+        vfx.SetActive(false);
     }
 }

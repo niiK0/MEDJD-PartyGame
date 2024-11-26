@@ -61,7 +61,7 @@ public class GUI : MonoBehaviour
 
     public void SetRedWinner()
     {
-        winnerText.text = "<color='red'>RED</color> <color='white'>WINS!</color>";
+        winnerText.text = "<color='orange'>ORANGE</color> <color='white'>WINS!</color>";
     }
 
     public void SetDrawText()
