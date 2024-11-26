@@ -12,7 +12,8 @@ public class PlayerBump : MonoBehaviour
     {
         if (!hit.gameObject.CompareTag("Player")) return;
 
-        ApplyPushback(hit.controller);
+        ApplyPushback(hit.gameObject.GetComponent<CharacterController>());
+        ApplyPushback(GetComponent<CharacterController>());
 
         if (!canBump) return;
 
@@ -44,13 +45,18 @@ public class PlayerBump : MonoBehaviour
         if (controller == null) return;
 
         Vector2 pushDirectionInput = controller.GetComponent<PlayerMovement>().moveInput;
+        if(pushDirectionInput == Vector2.zero && controller.GetComponent<CharacterController>() != GetComponent<CharacterController>())
+        {
+            pushDirectionInput = -GetComponent<PlayerMovement>().moveInput;
+        }
+
         Vector3 pushDirection = new Vector3(pushDirectionInput.x, 0, pushDirectionInput.y);
 
         Vector3 pushVelocity = -pushDirection.normalized * bumpForce;
 
         controller.GetComponent<PlayerMovement>().isGettingPushed = true;
 
-        StartCoroutine(ApplyPushbackOverTime(controller, pushVelocity, 0.1f));
+        StartCoroutine(ApplyPushbackOverTime(controller, pushVelocity, 0.2f));
     }
 
     private IEnumerator ApplyPushbackOverTime(CharacterController controller, Vector3 velocity, float duration)

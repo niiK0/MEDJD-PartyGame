@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR.Haptics;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -110,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void TeleportSelf(Vector3 tpPos)
     {
-        transform.position = tpPos;
+        playerController.Move(tpPos);
     }
 
     public void PlayerLeave(PlayerInput input)
