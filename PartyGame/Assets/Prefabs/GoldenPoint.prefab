@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8548984593853382754}
   - component: {fileID: 2137172540137200815}
   - component: {fileID: -6106740580435726489}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GoldenPoint
   m_TagString: Point
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 6.57, z: 0}
-  m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 0.90000004}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 154245528197521925}
