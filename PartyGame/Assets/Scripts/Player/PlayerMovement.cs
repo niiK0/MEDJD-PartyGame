@@ -20,7 +20,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject redVersion;
     public GameObject blueVersion;
 
-    private Vector2 moveInput;
+    public Vector2 moveInput;
+
+    public bool isGettingPushed = false;
 
     void Awake()
     {
@@ -45,7 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if(!isGettingPushed)
+            MovePlayer();
     }
 
     public void EnableRedVersion()

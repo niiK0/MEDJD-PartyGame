@@ -933,6 +933,8 @@ MonoBehaviour:
   maxPointsForPenalty: 10
   redVersion: {fileID: 5003045781732157354}
   blueVersion: {fileID: 3652500376814953951}
+  moveInput: {x: 0, y: 0}
+  isGettingPushed: 0
 --- !u!114 &738036647561514585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,6 +948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bumpCooldown: 1.5
+  bumpForce: 5
 --- !u!1001 &2556646374642681328
 PrefabInstance:
   m_ObjectHideFlags: 0
