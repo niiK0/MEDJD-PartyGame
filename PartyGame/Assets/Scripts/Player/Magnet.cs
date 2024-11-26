@@ -20,14 +20,6 @@ public class Magnet : MonoBehaviour
 
     public List<Point> points = new();
 
-    void Start()
-    {
-    }
-
-    void FixedUpdate()
-    {
-    }
-
     public void OnPlayerClick()
     {
         if (!canPress || currentState != CurrentState.Idle) return;

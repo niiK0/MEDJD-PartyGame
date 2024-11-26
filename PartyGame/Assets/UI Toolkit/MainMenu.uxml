@@ -19,7 +19,7 @@
                 <engine:Label text="Ready" name="P2_ReadyLabel" enabled="true" class="header3" style="display: flex; visibility: hidden;" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:Button text="START&#10;" name="StartBtn" selectable="false" focusable="true" class="startBtn button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
-        <engine:Button text="QUIT&#10;" name="QuitBtn" selectable="false" class="startBtn button" style="margin-top: 40px;" />
+        <engine:Button text="START&#10;" name="StartBtn" selectable="false" focusable="true" class="startBtn button" />
+        <engine:Button text="QUIT&#10;" name="QuitBtn" selectable="false" class="startBtn button" />
     </engine:VisualElement>
 </engine:UXML>

@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public int playerID;
     public PlayerInput playerInput;
     public CharacterController playerController;
+    public AudioSource moveAudio;
     public float moveSpeed;
     public float baseMoveSpeed;
     public bool canLeave = true;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         playerController = GetComponent<CharacterController>();
+        moveAudio = GetComponent<AudioSource>();
         canLeave = true;
     }
 
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         playerInput.onDeviceLost += PlayerLeave;
+        moveAudio.Stop();
     }
 
     // Update is called once per frame
@@ -75,11 +78,23 @@ public class PlayerMovement : MonoBehaviour
         {
             moveSpeed = baseMoveSpeed;
         }
+
         Vector3 moveInputV3 = new Vector3(moveInput.x, 0, moveInput.y) * moveSpeed;
         playerController.Move(moveInputV3 * Time.fixedDeltaTime);
         Vector3 curPos = transform.position;
         curPos.y = 3f;
         transform.position = curPos;
+
+        if(moveInputV3 != Vector3.zero)
+        {
+            if (!moveAudio.isPlaying)
+                moveAudio.Play();
+        }
+        else
+        {
+            if(moveAudio.isPlaying)
+                moveAudio.Stop();
+        }
     }
 
     private void GetMovement()

@@ -25,6 +25,8 @@ public class PocketPull : MonoBehaviour
 
         var point = other.GetComponent<Point>();
 
+        if (point.holder != null) return;
+
         point.StopPulling();
     }
 
