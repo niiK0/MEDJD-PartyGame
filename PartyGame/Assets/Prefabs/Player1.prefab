@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magnet: {fileID: 1984127216323604877}
   pressCooldown: 1
-  pullSpeed: 150
+  pullSpeed: 300
   pullPosition: {fileID: 5722228080216574354}
   currentState: 0
   vfx: {fileID: 5423344148027320154}
@@ -335,7 +335,7 @@ Transform:
   m_GameObject: {fileID: 4032797614453669429}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalPosition: {x: 0, y: -0.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
