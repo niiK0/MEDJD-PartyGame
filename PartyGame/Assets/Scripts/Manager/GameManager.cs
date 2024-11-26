@@ -187,6 +187,7 @@ public class GameManager : MonoBehaviour
 
         players.Add(playerInput.GetComponent<PlayerMovement>());
         playerInput.GetComponent<PlayerMovement>().playerID = playerID;
+        playerInput.GetComponent<PlayerMovement>().isGettingPushed = true;
         availableIDs[playerID] = false;
 
         ControllerType controllerType = ControllerType.None;
@@ -268,6 +269,7 @@ public class GameManager : MonoBehaviour
         foreach (var player in players)
         {
             player.canLeave = false;
+            player.isGettingPushed = false;
         }
 
         players.Find(x => x.playerID == 1).TeleportSelf(redPlayerSpawn.position);

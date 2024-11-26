@@ -20,6 +20,8 @@ public class MainMenuUI : MonoBehaviour
     private Label p1_ready;
     private Label p2_ready;
 
+    public AudioSource audioS;
+
     private void Awake()
     {
         document = GetComponent<UIDocument>();
@@ -39,6 +41,8 @@ public class MainMenuUI : MonoBehaviour
         //players labels
         p1_ready = document.rootVisualElement.Q<Label>("P1_ReadyLabel");
         p2_ready = document.rootVisualElement.Q<Label>("P2_ReadyLabel");
+
+        audioS = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -46,10 +50,32 @@ public class MainMenuUI : MonoBehaviour
         playButton.Focus();
     }
 
+    private void OnEnable()
+    {
+        playButton.RegisterCallback<FocusEvent>(OnFocus);
+        playButton.RegisterCallback<MouseEnterEvent>(MouseEnterEventFunc);
+        quitButton.RegisterCallback<FocusEvent>(OnFocus);
+        quitButton.RegisterCallback<MouseEnterEvent>(MouseEnterEventFunc);
+    }
+
     private void OnDisable()
     {
         playButton.clicked -= OnPlayGameClick;
         quitButton.clicked -= OnQuitGameClick;
+        playButton.UnregisterCallback<FocusEvent>(OnFocus);
+        playButton.UnregisterCallback<MouseEnterEvent>(MouseEnterEventFunc);
+        quitButton.UnregisterCallback<FocusEvent>(OnFocus);
+        quitButton.UnregisterCallback<MouseEnterEvent>(MouseEnterEventFunc);
+    }
+
+    private void MouseEnterEventFunc(MouseEnterEvent evt)
+    {
+        audioS.Play();
+    }
+
+    private void OnFocus(FocusEvent evt)
+    {
+        audioS.Play();
     }
 
     public void SetPlayerReady(int player, ControllerType controllerType, bool isReady)

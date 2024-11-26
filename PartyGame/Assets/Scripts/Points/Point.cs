@@ -48,15 +48,13 @@ public class Point : MonoBehaviour
         pullSpeed = speed;
         isBeingPulled = true;
         rb.useGravity = false;
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        //rb.linearVelocity = Vector3.zero;
+        //rb.angularVelocity = Vector3.zero;
     }
 
     public void StopPulling()
     {
         isBeingPulled = false;
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
     }
 
     public void ActivateSelf()
