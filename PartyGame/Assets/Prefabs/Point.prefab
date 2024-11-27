@@ -154,7 +154,7 @@ MonoBehaviour:
   isBeingPulled: 0
   pullSpeed: 1
   holder: {fileID: 0}
-  pickupSound: {fileID: 8300000, guid: 9f01bfc9b1cec2147ba50e48abcb2a51, type: 3}
+  audioS: {fileID: 0}
 --- !u!82 &-3394058647259102338
 AudioSource:
   m_ObjectHideFlags: 0

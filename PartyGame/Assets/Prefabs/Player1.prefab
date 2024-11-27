@@ -1035,6 +1035,9 @@ MonoBehaviour:
   redVersion: {fileID: 5003045781732157354}
   blueVersion: {fileID: 3652500376814953951}
   moveInput: {x: 0, y: 0}
+  visuals: {fileID: 2179844120343527614}
+  tiltAmount: 2
+  tiltAmountFront: 2
   isGettingPushed: 0
 --- !u!114 &738036647561514585
 MonoBehaviour:
