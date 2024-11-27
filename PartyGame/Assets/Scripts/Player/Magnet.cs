@@ -1,6 +1,8 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public enum CurrentState { Idle, Lowering, Picking, Returning }
 
@@ -17,8 +19,15 @@ public class Magnet : MonoBehaviour
 
     public GameObject vfx;
     public Animator anim;
+    public AudioSource audioS;
 
     public List<Point> points = new();
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        audioS = GetComponent<AudioSource>();
+    }
 
     public void OnPlayerClick()
     {
@@ -29,7 +38,9 @@ public class Magnet : MonoBehaviour
 
         if (hasPoints)
         {
+            //StartCoroutine(PlaySoundLoop(points.Count));
             DropPoints();
+            vfx.SetActive(false);
         }
         else
         {
@@ -62,12 +73,14 @@ public class Magnet : MonoBehaviour
         var point = other.GetComponent<Point>();
         point.GetPickedUP(pullPosition, pullSpeed);
         points.Add(point);
+        vfx.SetActive(true);
         Debug.Log("Point picked up!");
     }
 
     public void FinishAnimation()
     {
         currentState = CurrentState.Idle;
+        if(!hasPoints) vfx.SetActive(false);
     }
 
     public void StartDrop()
@@ -87,6 +100,15 @@ public class Magnet : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         currentState = CurrentState.Returning;
         Invoke("ResetPressCooldown", pressCooldown);
-        vfx.SetActive(false);
+        //StartCoroutine(PlaySoundLoop(points.Count));
+    }
+
+    private IEnumerator PlaySoundLoop(int playCount)
+    {
+        for (int i = 0; i < playCount; i++)
+        {
+            audioS.Play();
+            yield return new WaitForSeconds(audioS.clip.length); // Wait for the sound to finish
+        }
     }
 }

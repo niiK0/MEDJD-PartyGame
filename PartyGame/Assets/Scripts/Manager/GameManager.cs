@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public MainMenuUI mainMenuUI;
     public GUI gui;
     public PauseUI pauseUI;
+    public AudioSource audioS;
 
     //TIMER
     public float timer = 30;
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        audioS = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -81,6 +83,7 @@ public class GameManager : MonoBehaviour
         else
         {
             EndGame();
+            startTimer = false;
         }
 
     }
@@ -155,7 +158,6 @@ public class GameManager : MonoBehaviour
 
     public void LeaveRoom(PlayerInput player)
     {
-        //players.Remove(player);
         Destroy(player.gameObject);
     }
 
@@ -229,7 +231,7 @@ public class GameManager : MonoBehaviour
         }
 
         players.ForEach(x => x.isGettingPushed = true);
-        //Time.timeScale = 0;
+        audioS.Stop();
         Invoke("QuitGame", 3f);
     }
 
@@ -261,6 +263,8 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         if (players.Count < 2) return;
+
+        audioS.Play();
 
         //START GAME HERE
         mainMenuUI.document.rootVisualElement.style.display = DisplayStyle.None;

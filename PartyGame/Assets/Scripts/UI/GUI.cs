@@ -13,6 +13,9 @@ public class GUI : MonoBehaviour
     private Label p2_score;
     private Label winnerText;
     private VisualElement winnerRoot;
+    public AudioSource audioS;
+    public AudioClip gameOver;
+    public AudioClip timeUp;
 
     private bool timerStarted = false;
 
@@ -25,6 +28,8 @@ public class GUI : MonoBehaviour
         p2_score = document.rootVisualElement.Q<Label>("BlueScore");
         winnerText = document.rootVisualElement.Q<Label>("winnerText");
         winnerRoot = document.rootVisualElement.Q<VisualElement>("WinnerDisplay");
+
+        audioS = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -52,6 +57,11 @@ public class GUI : MonoBehaviour
         winnerRoot.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
         timerStarted = false;
         StopAllCoroutines();
+        if (show)
+        {
+            audioS.clip = gameOver;
+            audioS.Play();
+        }
     }
 
     public void SetBlueWinner()
@@ -75,12 +85,14 @@ public class GUI : MonoBehaviour
 
         timerStarted = true;
         StartCoroutine(TimerAnimation());
+        audioS.clip = timeUp;
     }
 
     private IEnumerator TimerAnimation()
     {
         while (true)
         {
+            audioS.Play();
             timer.AddToClassList("timeLabelAnim");
             yield return new WaitForSecondsRealtime(0.6f);
             StopTimerAnimation();

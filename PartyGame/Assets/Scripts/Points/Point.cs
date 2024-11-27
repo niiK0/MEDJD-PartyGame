@@ -13,12 +13,15 @@ public class Point : MonoBehaviour
 
     public Transform holder;
 
+    public AudioSource audioS;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.mass = 5f;
         rb.linearDamping = 0.5f;
         rb.angularDamping = 4f;
+        audioS = GetComponent<AudioSource>();
     }
 
     private void FixedUpdate()
@@ -94,5 +97,11 @@ public class Point : MonoBehaviour
         holder = null;
         transform.parent = GameManager.Instance.pointsParent;
         StopPulling();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(audioS.isPlaying) return;
+        audioS.Play();
     }
 }
