@@ -260,6 +260,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void StartGameFromMenu()
+    {
+
+    }
+
     public void StartGame()
     {
         if (players.Count < 2) return;
