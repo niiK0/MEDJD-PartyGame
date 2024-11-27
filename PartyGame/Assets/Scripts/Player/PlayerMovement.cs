@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject blueVersion;
 
     public Vector2 moveInput;
+    public GameObject visuals;
+    public float tiltAmount = 1f;
+    public float tiltAmountFront = 5f;
 
     public bool isGettingPushed = false;
 
@@ -81,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 moveInputV3 = new Vector3(moveInput.x, 0, moveInput.y) * moveSpeed;
         playerController.Move(moveInputV3 * Time.fixedDeltaTime);
+
         Vector3 curPos = transform.position;
         curPos.y = 3f;
         transform.position = curPos;
@@ -95,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
             if(moveAudio.isPlaying)
                 moveAudio.Stop();
         }
+
+        TiltVisuals(moveInputV3);
     }
 
     private void GetMovement()
@@ -132,5 +138,31 @@ public class PlayerMovement : MonoBehaviour
     public void PlayerLeave(PlayerInput input)
     {
         GameManager.Instance.LeaveRoom(input);
+    }
+
+    private void TiltVisuals(Vector3 movementDirection)
+    {
+        if (movementDirection != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.Euler(new Vector3(
+                tiltAmountFront * movementDirection.z,
+                0,
+                tiltAmount * -movementDirection.x
+            ));
+
+            visuals.transform.rotation = Quaternion.Lerp(
+                visuals.transform.rotation,
+                targetRotation,
+                Time.deltaTime * 10f
+            );
+        }
+        else
+        {
+            visuals.transform.rotation = Quaternion.Lerp(
+                visuals.transform.rotation,
+                Quaternion.identity, // Neutral position
+                Time.deltaTime * 10f
+            );
+        }
     }
 }
