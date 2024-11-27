@@ -16,6 +16,7 @@ public class PointPocket : MonoBehaviour
 
         GameManager.Instance.ScorePoint(team, other.GetComponent<Point>());
         vfx.Play();
-        audioS.Play();
+        //audioS.Play();
+        AudioSource.PlayClipAtPoint(audioS.clip, transform.position, audioS.volume);
     }
 }
