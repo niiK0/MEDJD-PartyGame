@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public PauseUI pauseUI;
     public AudioSource audioS;
     public GameObject mainCamera;
+    public AudioSource allTimeBGMusic;
 
     //TIMER
     public float timer = 30;
@@ -251,6 +252,7 @@ public class GameManager : MonoBehaviour
 
     private void EndGamePhaseOne()
     {
+        allTimeBGMusic.Play();
         players.ForEach(x => x.isGettingPushed = true);
         audioS.Stop();
     }
@@ -317,6 +319,7 @@ public class GameManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        allTimeBGMusic.Stop();
         mainCamera.SetActive(true);
         timelineEnd.gameObject.SetActive(false);
         ResetGame();
@@ -330,6 +333,7 @@ public class GameManager : MonoBehaviour
         mainMenuUI.document.rootVisualElement.style.display = DisplayStyle.None;
         gui.document.rootVisualElement.style.display = DisplayStyle.Flex;
         inputManager.DisableJoining();
+        allTimeBGMusic.Play();
 
         foreach (var player in players)
         {
@@ -353,6 +357,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        allTimeBGMusic.Stop();
         audioS.Play();
 
         SetupPoints();
