@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GUI gui;
     public PauseUI pauseUI;
     public AudioSource audioS;
+    public GameObject mainCamera;
 
     //TIMER
     public float timer = 30;
@@ -110,7 +111,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            EndGame();
+            timelineEnd.gameObject.SetActive(true);
+            Invoke("EndTimelineFinish", (float)timelineEnd.duration);
+            EndGamePhaseOne();
+            Invoke("EndGame", 3f);
             startTimer = false;
         }
 
@@ -244,6 +248,18 @@ public class GameManager : MonoBehaviour
         player.playerAnimator.SetBool("doCheer", true);
     }
 
+
+    private void EndGamePhaseOne()
+    {
+        players.ForEach(x => x.isGettingPushed = true);
+        audioS.Stop();
+    }
+
+    public PlayerMovement GetPlayerByID(int id)
+    {
+        return players.Find(x => x.playerID == id);
+    }
+
     public void EndGame()
     {
         if (redTeamPoints > blueTeamPoints)
@@ -278,12 +294,6 @@ public class GameManager : MonoBehaviour
         }
 
         gui.ShowWinner(true);
-
-        timelineEnd.gameObject.SetActive(true);
-        Invoke("EndTimelineFinish", (float)timelineEnd.duration);
-
-        players.ForEach(x => x.isGettingPushed = true);
-        audioS.Stop();
     }
 
     public void QuitGame()
@@ -307,6 +317,7 @@ public class GameManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        mainCamera.SetActive(true);
         timelineEnd.gameObject.SetActive(false);
         ResetGame();
         Time.timeScale = 1;
@@ -393,6 +404,15 @@ public class GameManager : MonoBehaviour
             }
         }
         points.Clear();
+
+        for (int i = pointsForRespawn.Count - 1; i >= 0; i--)
+        {
+            if (pointsForRespawn[i] != null)
+            {
+                Destroy(pointsForRespawn[i].gameObject);
+            }
+        }
+        pointsForRespawn.Clear();
 
         // Destroy all players safely
         for (int i = players.Count - 1; i >= 0; i--)

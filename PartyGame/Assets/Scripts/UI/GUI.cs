@@ -58,7 +58,9 @@ public class GUI : MonoBehaviour
     {
         if (show)
         {
-            Invoke("ShowStuffTrue", (float)GameManager.Instance.timelineEnd.duration / 3);
+            timerStarted = false;
+            StopTimerAnimation();
+            Invoke("ShowStuffTrue", 2.5f);
         }
         else
         {
@@ -69,7 +71,6 @@ public class GUI : MonoBehaviour
     private void ShowStuffTrue()
     {
         canUpdateScore = false;
-        timerStarted = false;
         winnerRoot.style.display = DisplayStyle.Flex;
         StopAllCoroutines();
     }
@@ -116,7 +117,7 @@ public class GUI : MonoBehaviour
 
     private IEnumerator TimerAnimation()
     {
-        while (true)
+        while (timerStarted)
         {
             audioS.Play();
             timer.AddToClassList("timeLabelAnim");

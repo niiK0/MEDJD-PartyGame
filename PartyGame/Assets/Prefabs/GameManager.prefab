@@ -86,8 +86,9 @@ MonoBehaviour:
   gui: {fileID: 0}
   pauseUI: {fileID: 0}
   audioS: {fileID: 0}
-  timer: 30
-  baseTimer: 30
+  mainCamera: {fileID: 0}
+  timer: 33
+  baseTimer: 33
   startTimer: 0
   redPlayerSpawn: {fileID: 7272520552569407738}
   bluePlayerSpawn: {fileID: 5189095615002796866}

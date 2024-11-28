@@ -1219,11 +1219,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 597500552938672385, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 89.9802
+      value: 89.98021
       objectReference: {fileID: 0}
     - target: {fileID: 1873296319835845359, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 89.9802
+      value: 57.184364
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873296319835845359, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -145.37221
+      objectReference: {fileID: 0}
+    - target: {fileID: 1873296319835845359, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -145.43164
       objectReference: {fileID: 0}
     - target: {fileID: 1908773637378674625, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1254,12 +1262,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1908773637378674625, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 33.725483
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908773637378674625, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 6.9913044
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908773637378674625, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 7.1589828
       objectReference: {fileID: 0}
     - target: {fileID: 2535762139102936160, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -0.0000055388764
+      value: -0.000005120345
       objectReference: {fileID: 0}
     - target: {fileID: 6299847167327374145, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_Name
@@ -1323,27 +1339,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6900843844837574570, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 13.788602
+      value: 4.927409
       objectReference: {fileID: 0}
     - target: {fileID: 6900843844837574570, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -70.10341
+      value: -53.907604
       objectReference: {fileID: 0}
     - target: {fileID: 6900843844837574570, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -25.154917
+      value: -3.2492313
       objectReference: {fileID: 0}
     - target: {fileID: 7964994979931669444, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 13.788602
+      value: 10.297616
       objectReference: {fileID: 0}
     - target: {fileID: 7964994979931669444, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 70.10341
+      value: 76.17643
       objectReference: {fileID: 0}
     - target: {fileID: 7964994979931669444, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 25.154917
+      value: 35.309334
       objectReference: {fileID: 0}
     - target: {fileID: 7989812803642910357, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1351,7 +1367,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8036033350501377072, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 89.9802
+      value: 89.99444
+      objectReference: {fileID: 0}
+    - target: {fileID: 8036033350501377072, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -9.670061
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1360,6 +1380,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6299847167327374145, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4675405020135382741}
+    - targetCorrespondingSourceObject: {fileID: 6299847167327374145, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8382948895122977376}
   m_SourcePrefab: {fileID: 100100000, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
 --- !u!1 &6565930901496094018 stripped
 GameObject:
@@ -1393,6 +1416,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8382948895122977376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8365020468621774513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d975327a150d4c43bc920c8aefb3bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioC: {fileID: 8300000, guid: adb9a4be81b32724dbac86328c07c80d, type: 3}
 --- !u!4 &9177585518561645579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6640097171972346363, guid: 125c121c7b3d5664e8d9accca40b1fce, type: 3}
@@ -1656,6 +1692,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8630419329233586272, guid: d53174dce79fcd543a80d3d67865ca71, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2014143222655279657}
+    - targetCorrespondingSourceObject: {fileID: 8630419329233586272, guid: d53174dce79fcd543a80d3d67865ca71, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4864861420486258027}
   m_SourcePrefab: {fileID: 100100000, guid: d53174dce79fcd543a80d3d67865ca71, type: 3}
 --- !u!4 &160524033925883176 stripped
 Transform:
@@ -1689,6 +1728,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4864861420486258027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680495918656585618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d975327a150d4c43bc920c8aefb3bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioC: {fileID: 8300000, guid: 16fad0b874111fd44b274c64aef244c9, type: 3}
 --- !u!1 &2772460319318813793 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6398825833575734163, guid: d53174dce79fcd543a80d3d67865ca71, type: 3}
