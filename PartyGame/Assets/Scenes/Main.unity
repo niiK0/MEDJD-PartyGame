@@ -2781,7 +2781,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1984503415
 Transform:
   m_ObjectHideFlags: 0
@@ -3003,6 +3003,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TimelineEnd
       objectReference: {fileID: 0}
+    - target: {fileID: 1199757310763535506, guid: ee37a00c57f6796459e8773dddc28b5c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446574377998138207, guid: ee37a00c57f6796459e8773dddc28b5c, type: 3}
+      propertyPath: m_SceneBindings.Array.data[5].value
+      value: 
+      objectReference: {fileID: 330585543}
     - target: {fileID: 4910585638842093563, guid: ee37a00c57f6796459e8773dddc28b5c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
