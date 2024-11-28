@@ -62,6 +62,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!isGettingPushed)
             MovePlayer();
+
+        SetPlayerHeight();
+    }
+
+    private void SetPlayerHeight()
+    {
+        Vector3 curPos = transform.position;
+        curPos.y = 3f;
+        transform.position = curPos;
     }
 
     public void EnableRedVersion()
@@ -94,10 +103,6 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 moveInputV3 = new Vector3(moveInput.x, 0, moveInput.y) * moveSpeed;
         playerController.Move(moveInputV3 * Time.fixedDeltaTime);
-
-        Vector3 curPos = transform.position;
-        curPos.y = 3f;
-        transform.position = curPos;
 
         if(moveInputV3 != Vector3.zero)
         {
@@ -143,6 +148,8 @@ public class PlayerMovement : MonoBehaviour
     public void TeleportSelf(Vector3 tpPos)
     {
         playerController.Move(tpPos);
+        transform.position = tpPos;
+        Debug.Log("Teleported player to " + tpPos);
     }
 
     public void PlayerLeave(PlayerInput input)

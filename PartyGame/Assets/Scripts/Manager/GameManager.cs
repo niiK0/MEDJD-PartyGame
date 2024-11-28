@@ -1,9 +1,14 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
@@ -27,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     public Transform redPlayerSpawn;
     public Transform bluePlayerSpawn;
+    public Transform winPosition;
 
     //POINTS
     public List<Point> points = new();
@@ -43,6 +49,10 @@ public class GameManager : MonoBehaviour
     //TEAMS
     public int blueTeamPoints;
     public int redTeamPoints;
+
+    //TIMELINE
+    public PlayableDirector timelineStart;
+    public PlayableDirector timelineEnd;
 
     private void Awake()
     {
@@ -62,10 +72,28 @@ public class GameManager : MonoBehaviour
         ResetGame();
     }
 
+
     private void Update()
     {
         CheckRespawn();
         DoTimer();
+    }
+
+    public void CheckTimelineEnd()
+    {
+        timelineStart.gameObject.SetActive(false);
+        StartGame();
+        VolumeProfile volumeProfile = FindFirstObjectByType<Volume>()?.profile;
+        DepthOfField depthOfField;
+        if (volumeProfile.TryGet(out depthOfField))
+        {
+            depthOfField.mode.Override(DepthOfFieldMode.Gaussian);
+        }
+    }
+
+    private void EndTimelineFinish()
+    {
+        Invoke("BackToMenu", 5f);
     }
 
     private void DoTimer()
@@ -209,30 +237,53 @@ public class GameManager : MonoBehaviour
         mainMenuUI.SetPlayerReady(playerInput.GetComponent<PlayerMovement>().playerID, controllerType, true);
     }
 
+    private IEnumerator DelayCheerAnimation(PlayerMovement player, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        player.playerAnimator.enabled = true;
+        player.playerAnimator.SetBool("doCheer", true);
+    }
+
     public void EndGame()
     {
         if (redTeamPoints > blueTeamPoints)
         {
-            gui.ShowWinner(true);
             gui.SetRedWinner();
+            PlayerMovement player = players.Find(x => x.playerID == 1);
+            player.isGettingPushed = false;
+            player.TeleportSelf(winPosition.localPosition);
+            StartCoroutine(DelayCheerAnimation(player, 0.75f));
             Debug.Log("Red team won!");
         }
         else if(blueTeamPoints > redTeamPoints)
         {
-            gui.ShowWinner(true);
             gui.SetBlueWinner();
+            PlayerMovement player = players.Find(x => x.playerID == 2);
+            player.isGettingPushed = false;
+            player.TeleportSelf(winPosition.localPosition);
+            StartCoroutine(DelayCheerAnimation(player, 0.75f));
             Debug.Log("Blue team won!");
         }
         else
         {
-            gui.ShowWinner(true);
             gui.SetDrawText();
             Debug.Log("Draw!");
         }
 
+        VolumeProfile volumeProfile = FindFirstObjectByType<Volume>()?.profile;
+        DepthOfField depthOfField;
+        if (volumeProfile.TryGet(out depthOfField))
+        {
+            depthOfField.mode.Override(DepthOfFieldMode.Off);
+        }
+
+        gui.ShowWinner(true);
+
+        timelineEnd.gameObject.SetActive(true);
+        Invoke("EndTimelineFinish", (float)timelineEnd.duration);
+
         players.ForEach(x => x.isGettingPushed = true);
         audioS.Stop();
-        Invoke("QuitGame", 3f);
     }
 
     public void QuitGame()
@@ -256,29 +307,22 @@ public class GameManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        timelineEnd.gameObject.SetActive(false);
         ResetGame();
         Time.timeScale = 1;
     }
 
     public void StartGameFromMenu()
     {
-
-    }
-
-    public void StartGame()
-    {
         if (players.Count < 2) return;
 
-        audioS.Play();
-
-        //START GAME HERE
         mainMenuUI.document.rootVisualElement.style.display = DisplayStyle.None;
         gui.document.rootVisualElement.style.display = DisplayStyle.Flex;
         inputManager.DisableJoining();
+
         foreach (var player in players)
         {
             player.canLeave = false;
-            player.isGettingPushed = false;
         }
 
         players.Find(x => x.playerID == 1).TeleportSelf(redPlayerSpawn.position);
@@ -286,13 +330,33 @@ public class GameManager : MonoBehaviour
         players.Find(x => x.playerID == 2).TeleportSelf(bluePlayerSpawn.position);
         players.Find(x => x.playerID == 2).EnableBlueVersion();
 
+        timelineStart.gameObject.SetActive(true);
+        Invoke("CheckTimelineEnd", (float)timelineStart.duration);
+        VolumeProfile volumeProfile = FindFirstObjectByType<Volume>()?.profile;
+        DepthOfField depthOfField;
+        if(volumeProfile.TryGet(out depthOfField))
+        {
+            depthOfField.mode.Override(DepthOfFieldMode.Off);
+        }
+    }
+
+    public void StartGame()
+    {
+        audioS.Play();
+
         SetupPoints();
         foreach(var point in points)
         {
             point.ActivateSelf();
         }
 
+        foreach (var player in players)
+        {
+            player.isGettingPushed = false;
+        }
+
         startTimer = true;
+        gui.canUpdateScore = true;
 
         Debug.Log("Game Started");
     }
@@ -302,10 +366,18 @@ public class GameManager : MonoBehaviour
         redTeamPoints = 0;
         blueTeamPoints = 0;
         timer = baseTimer;
+        gui.ResetText(baseTimer);
+        startTimer = false;
         DestroyAllPointsAndPlayers();
         mainMenuUI.document.rootVisualElement.style.display = DisplayStyle.Flex;
         gui.document.rootVisualElement.style.display = DisplayStyle.None;
         pauseUI.document.rootVisualElement.style.display = DisplayStyle.None;
+        timelineStart.gameObject.SetActive(false);
+        timelineEnd.gameObject.SetActive(false);
+        CancelInvoke();
+        gui.CancelInvoke();
+        pauseUI.CancelInvoke();
+        mainMenuUI.CancelInvoke();
         gui.ShowWinner(false);
         inputManager.EnableJoining();
     }
@@ -315,9 +387,12 @@ public class GameManager : MonoBehaviour
         // Destroy all points safely
         for (int i = points.Count - 1; i >= 0; i--)
         {
-            Destroy(points[i].gameObject);
-            points.RemoveAt(i);
+            if(points[i] != null)
+            {
+                Destroy(points[i].gameObject);
+            }
         }
+        points.Clear();
 
         // Destroy all players safely
         for (int i = players.Count - 1; i >= 0; i--)

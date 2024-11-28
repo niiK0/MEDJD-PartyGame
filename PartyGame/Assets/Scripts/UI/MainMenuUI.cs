@@ -97,7 +97,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void OnPlayGameClick()
     {
-        GameManager.Instance.StartGame();
+        GameManager.Instance.StartGameFromMenu();
     }
 
     public void OnQuitGameClick()

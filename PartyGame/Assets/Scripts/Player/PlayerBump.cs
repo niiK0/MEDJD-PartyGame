@@ -1,93 +1,93 @@
 using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
 
 public class PlayerBump : MonoBehaviour
 {
     public float bumpCooldown = 2.0f;
     public float bumpForce = 10.0f;
-    private bool canBump = true;
+    public float bumpDuration = 0.2f;
+    private bool canDropPoints = true; // Separate flag for point dropping
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        // Ignore if not colliding with another player
         if (!hit.gameObject.CompareTag("Player")) return;
 
-        ApplyPushback(hit.gameObject.GetComponent<CharacterController>());
-        ApplyPushback(GetComponent<CharacterController>());
+        PlayerMovement thisPlayer = GetComponent<PlayerMovement>();
+        PlayerMovement otherPlayer = hit.gameObject.GetComponent<PlayerMovement>();
 
-        if (!canBump) return;
+        if (thisPlayer == null || otherPlayer == null) return;
 
-        var otherPlayerMagnet = hit.gameObject.GetComponentInChildren<Magnet>();
-        var thisPlayerMagnet = GetComponentInChildren<Magnet>();
+        // Prevent bump if either player is already being pushed
+        if (thisPlayer.isGettingPushed || otherPlayer.isGettingPushed) return;
 
-        if (thisPlayerMagnet == null || otherPlayerMagnet == null) return;
+        // Apply pushback to both players
+        Vector3 collisionNormal = hit.normal;
 
-        bool thisPlayerHasPoints = thisPlayerMagnet.points.Count > 0;
-        bool otherPlayerHasPoints = otherPlayerMagnet.points.Count > 0;
+        ApplyPushback(thisPlayer.playerController, collisionNormal, bumpForce);
+        ApplyPushback(otherPlayer.playerController, -collisionNormal, bumpForce);
 
-        if (thisPlayerHasPoints)
+        // Handle point dropping only if allowed
+        if (canDropPoints)
         {
-            DropRandomPoint(thisPlayerMagnet);
+            HandlePointDrop(thisPlayer.magnet);
+            HandlePointDrop(otherPlayer.magnet);
+
+            // Set cooldown for point dropping
+            canDropPoints = false;
+            Invoke(nameof(ResetPointDropCooldown), bumpCooldown);
         }
-
-        if (otherPlayerHasPoints)
-        {
-            DropRandomPoint(otherPlayerMagnet);
-        }
-
-
-        canBump = false;
-        Invoke(nameof(ResetBumpCooldown), bumpCooldown);
     }
 
-    private void ApplyPushback(CharacterController controller)
+    private void ApplyPushback(CharacterController controller, Vector3 direction, float force)
     {
         if (controller == null) return;
 
-        Vector2 pushDirectionInput = controller.GetComponent<PlayerMovement>().moveInput;
-        if(pushDirectionInput == Vector2.zero && controller.GetComponent<CharacterController>() != GetComponent<CharacterController>())
-        {
-            pushDirectionInput = -GetComponent<PlayerMovement>().moveInput;
-        }
+        PlayerMovement player = controller.GetComponent<PlayerMovement>();
+        if (player == null) return;
 
-        Vector3 pushDirection = new Vector3(pushDirectionInput.x, 0, pushDirectionInput.y);
+        player.isGettingPushed = true;
 
-        Vector3 pushVelocity = -pushDirection.normalized * bumpForce;
+        // Normalize direction and apply force
+        Vector3 pushVelocity = direction.normalized * force;
 
-        controller.GetComponent<PlayerMovement>().isGettingPushed = true;
-
-        StartCoroutine(ApplyPushbackOverTime(controller, pushVelocity, 0.2f));
+        StartCoroutine(ApplyPushbackOverTime(controller, pushVelocity));
     }
 
-    private IEnumerator ApplyPushbackOverTime(CharacterController controller, Vector3 velocity, float duration)
+    private IEnumerator ApplyPushbackOverTime(CharacterController controller, Vector3 velocity)
     {
         float elapsed = 0f;
 
-        while (elapsed < duration)
+        while (elapsed < bumpDuration)
         {
             controller.Move(velocity * Time.deltaTime); // Incremental movement
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        controller.GetComponent<PlayerMovement>().isGettingPushed = false;
+        // Reset push state
+        PlayerMovement player = controller.GetComponent<PlayerMovement>();
+        if (player != null)
+        {
+            player.isGettingPushed = false;
+        }
     }
 
-    private void DropRandomPoint(Magnet playerMagnet)
+    private void HandlePointDrop(Magnet magnet)
     {
-        if (playerMagnet.points.Count == 0) return;
+        if (magnet == null || magnet.points.Count == 0) return;
 
-        int randomIndex = Random.Range(0, playerMagnet.points.Count);
-        Point pointToDrop = playerMagnet.points[randomIndex];
+        int randomIndex = Random.Range(0, magnet.points.Count);
+        Point pointToDrop = magnet.points[randomIndex];
 
-        playerMagnet.points.RemoveAt(randomIndex);
+        magnet.points.RemoveAt(randomIndex);
         pointToDrop.GetReleased();
 
-        Debug.Log($"Dropped point {pointToDrop.name} from {playerMagnet.name}");
+        Debug.Log($"Dropped point {pointToDrop.name} from {magnet.name}");
     }
 
-    private void ResetBumpCooldown()
+    private void ResetPointDropCooldown()
     {
-        canBump = true;
+        canDropPoints = true;
     }
 }

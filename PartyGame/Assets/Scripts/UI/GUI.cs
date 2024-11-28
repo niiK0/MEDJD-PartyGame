@@ -14,10 +14,10 @@ public class GUI : MonoBehaviour
     private Label winnerText;
     private VisualElement winnerRoot;
     public AudioSource audioS;
-    public AudioClip gameOver;
     public AudioClip timeUp;
 
     private bool timerStarted = false;
+    public bool canUpdateScore = true;
 
     private void Awake()
     {
@@ -44,24 +44,50 @@ public class GUI : MonoBehaviour
 
     public void UpdateRedScore(int score)
     {
-        p1_score.text = score.ToString();
+        if(canUpdateScore)
+            p1_score.text = score.ToString();
     }
 
     public void UpdateBlueScore(int score)
     {
-        p2_score.text = score.ToString();
+        if (canUpdateScore)
+            p2_score.text = score.ToString();
     }
 
     public void ShowWinner(bool show)
     {
-        winnerRoot.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
-        timerStarted = false;
-        StopAllCoroutines();
         if (show)
         {
-            audioS.clip = gameOver;
-            audioS.Play();
+            Invoke("ShowStuffTrue", (float)GameManager.Instance.timelineEnd.duration / 3);
         }
+        else
+        {
+            ShowStuffFalse();
+        }
+    }
+
+    private void ShowStuffTrue()
+    {
+        canUpdateScore = false;
+        timerStarted = false;
+        winnerRoot.style.display = DisplayStyle.Flex;
+        StopAllCoroutines();
+    }
+
+    public void ResetText(float resetTimer)
+    {
+        p1_score.text = "0";
+        p2_score.text = "0";
+        timer.text = resetTimer.ToString();
+    }
+
+    private void ShowStuffFalse()
+    {
+        canUpdateScore = true;
+        timerStarted = false;
+        winnerRoot.style.display = DisplayStyle.None;
+        StopTimerAnimation();
+        StopAllCoroutines();
     }
 
     public void SetBlueWinner()
