@@ -20,6 +20,13 @@ public class MainMenuUI : MonoBehaviour
     private Label p1_ready;
     private Label p2_ready;
 
+    private Label joinp1p1;
+    private Label joinp1p2;
+    private Label joinp2p1;
+    private Label joinp2p2;
+    private VisualElement joinp1Image;
+    private VisualElement joinp2Image;
+
     public AudioSource audioS;
 
     private void Awake()
@@ -41,6 +48,12 @@ public class MainMenuUI : MonoBehaviour
         //players labels
         p1_ready = document.rootVisualElement.Q<Label>("P1_ReadyLabel");
         p2_ready = document.rootVisualElement.Q<Label>("P2_ReadyLabel");
+        joinp1p1 = document.rootVisualElement.Q<Label>("JoinP1P1");
+        joinp1p2 = document.rootVisualElement.Q<Label>("JoinP1P2");
+        joinp2p1 = document.rootVisualElement.Q<Label>("JoinP2P1");
+        joinp2p2 = document.rootVisualElement.Q<Label>("JoinP2P2");
+        joinp1Image = document.rootVisualElement.Q<VisualElement>("JoinP1IMG");   
+        joinp2Image = document.rootVisualElement.Q<VisualElement>("JoinP2IMG");
 
         audioS = GetComponent<AudioSource>();
     }
@@ -85,6 +98,9 @@ public class MainMenuUI : MonoBehaviour
             p1_image.style.backgroundImage = controllerType == ControllerType.KBM ? new StyleBackground(kbmSprite) : new StyleBackground(gpadSprite);
             p1_image.style.visibility = isReady ? Visibility.Visible : Visibility.Hidden;
             p1_ready.style.visibility = isReady ? Visibility.Visible : Visibility.Hidden;
+            joinp1p1.style.visibility = !isReady ? Visibility.Visible : Visibility.Hidden;
+            joinp1p2.style.visibility = !isReady ? Visibility.Visible : Visibility.Hidden;
+            joinp1Image.style.visibility = !isReady ? Visibility.Visible : Visibility.Hidden;
         }
         
         if (player == 2)
@@ -92,6 +108,9 @@ public class MainMenuUI : MonoBehaviour
             p2_image.style.backgroundImage = controllerType == ControllerType.KBM ? new StyleBackground(kbmSprite) : new StyleBackground(gpadSprite);
             p2_image.style.visibility = isReady ? Visibility.Visible : Visibility.Hidden;
             p2_ready.style.visibility = isReady ? Visibility.Visible : Visibility.Hidden;
+            joinp2p1.style.visibility = !isReady ? Visibility.Visible : Visibility.Hidden;
+            joinp2p2.style.visibility = !isReady ? Visibility.Visible : Visibility.Hidden;
+            joinp2Image.style.visibility = !isReady ? Visibility.Visible : Visibility.Hidden;
         }
     }
 

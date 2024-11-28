@@ -16,4 +16,8 @@
             <engine:Label text="&lt;color=&quot;red&quot;&gt;RED&lt;/color&gt; &lt;color=&quot;white&quot;&gt;WINS!&lt;/color&gt;" name="winnerText" enable-rich-text="true" emoji-fallback-support="true" parse-escape-sequences="false" style="align-self: center; -unity-text-align: middle-center; font-size: 160px; text-shadow: 2px 2px 3px rgb(0, 0, 0); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0);" />
         </engine:VisualElement>
     </engine:VisualElement>
+    <engine:VisualElement style="flex-grow: 0; align-self: center; align-content: stretch; width: 800px; height: 100px; justify-content: center; flex-direction: row-reverse; align-items: stretch; flex-wrap: nowrap; flex-shrink: 0; margin-left: 100px;">
+        <engine:Label text="TO RELEASE MAGNET" class="timeLabel" style="align-self: center; width: 460px; font-size: 32px; word-spacing: 24px; -unity-text-align: middle-left; padding-left: 0; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0); -unity-text-outline-width: 0;" />
+        <engine:VisualElement style="flex-grow: 0; align-self: center; align-content: center; flex-direction: row; flex-shrink: 0; width: 96px; height: 96px; margin-right: 15px; background-image: url(&quot;project://database/Assets/Images/ddsaasd.png?fileID=2800000&amp;guid=e5540bcd47b764b44afae14e470afd2f&amp;type=3#ddsaasd&quot;); -unity-background-image-tint-color: rgb(255, 255, 255); -unity-background-scale-mode: stretch-to-fill;" />
+    </engine:VisualElement>
 </engine:UXML>

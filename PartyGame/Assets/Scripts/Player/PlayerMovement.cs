@@ -125,12 +125,13 @@ public class PlayerMovement : MonoBehaviour
     private void GetInteractInput()
     {
         float leaveInput = playerInput.actions["Interact"].ReadValue<float>();
-        if(leaveInput == 1 && !isGettingPushed)
+        if(leaveInput == 1)
         {
             if(canLeave)
                 PlayerLeave(playerInput);
 
-            GetComponentInChildren<Magnet>().OnPlayerClick();
+            if(!isGettingPushed)
+                GetComponentInChildren<Magnet>().OnPlayerClick();
         }
     }
 

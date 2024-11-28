@@ -1059,7 +1059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf8cf7a8efaf72642b7bf3911d692d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bumpCooldown: 1.5
+  bumpCooldown: 0.75
   bumpForce: 2.5
   bumpDuration: 0.2
 --- !u!82 &2190481134390571496
